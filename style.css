@@ -21,14 +21,17 @@ GREY COLOR: #343a40
 /* GENERAL STYLES */
 /* ------------------------ */
 body {
-  font-family:'Inter',sans-serif;
+  font-family: 'Inter', sans-serif;
   color: #343a40;
   border-bottom: 8px solid #087f5b; 
 }
 
+/* FIX 1: Fluid sizing so the container shrinks safely on smaller screens */
 .container {
-  width: 960px;
+  max-width: 960px;
+  width: 100%;
   margin: 0 auto;
+  padding: 0 24px; /* Prevents text from hugging the very edge of mobile screens */
 }
 
 header,
@@ -50,7 +53,7 @@ h2 {
 
 .btn:link,
 .btn:visited {
-   background-color:  #087f5b;
+   background-color: #087f5b;
    color: #fff;
    text-decoration: none;
    text-transform: uppercase;
@@ -62,7 +65,7 @@ h2 {
 .btn:active {
   position: relative;
    background-color: yellowgreen; 
-   cursor: hand;
+   cursor: pointer; /* Modern standard helper cursor */
    overflow: hidden;
    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
    transition: all 0.3s ease-in-out;
@@ -70,12 +73,11 @@ h2 {
 }
 
 .btn--big { 
-font-size: 18px;
-padding:16px 32px;
+  font-size: 18px;
+  padding: 16px 32px;
 }
 
 .btn--small {
-
   font-size: 14px;
   padding: 8px 12px;
 }
@@ -98,7 +100,7 @@ header {
 
 h1 {
   margin-bottom: 24px;
-  font-size:44px ;
+  font-size: 44px;
   line-height: 1.1;
   letter-spacing: -1px;
 }
@@ -111,11 +113,12 @@ h1 {
 
 img {
   width: 100%;
+  height: auto; /* Keeps images proportioned perfectly when shrinking */
 }
 
 /* FEATURES */
 .features-icon {
-  stroke:#087f5b;
+  stroke: #087f5b;
   width: 32px;
   height: 32px;
   margin-bottom: 16px;
@@ -127,15 +130,15 @@ img {
 }
 
 .features-text {
-  font-family: 18px;
+  font-size: 18px; /* Fixed font-family bug to standard font-size rule */
   line-height: 1.7;
 }
 
 /* TESTIMONIAL */
 .testimonial-section {
   background-color: #087f5b;
-  color:#fff;
-  padding: 24px;
+  color: #fff;
+  padding: 44px 0; /* Adjusted internal padding space */
 }
 
 .testimonial-box {
@@ -158,6 +161,8 @@ img {
 /* CHAIRS */
 .chair-box {
   padding: 24px;
+  background-color: #f8f9fa; /* Light grey backdrop cards for clean framing */
+  border-radius: 7px;
 }
 
 h3 {
@@ -182,16 +187,16 @@ h3 {
 }
 
 .chair-icon {
-  stroke:#087f5b;
+  stroke: #087f5b;
   width: 24px;
   height: 24px;
-  
 }
 
 .chair-price {
   display: flex;
   justify-content: space-between;
-  font-family: 20px;
+  align-items: center;
+  font-size: 20px; /* Fixed font-family bug to proper font-size rule */
 }
 
 footer {
@@ -200,3 +205,47 @@ footer {
   color: #495057;
 }
 
+/* ------------------------ */
+/* RESPONSIVE MEDIA QUERIES */
+/* ------------------------ */
+
+/* FIX 2: Tablet Viewports (Screens under 900px wide) */
+@media (max-width: 900px) {
+  .grid-3-cols {
+    column-gap: 32px; /* Pulls elements closer together so they don't break early */
+  }
+  
+  header {
+    column-gap: 32px;
+  }
+}
+
+/* FIX 3: Mobile Phone Viewports (Screens under 768px wide) */
+@media (max-width: 768px) {
+  /* Stacks layout components cleanly in a single vertical column */
+  .grid-3-cols {
+    grid-template-columns: 1fr;
+    row-gap: 32px;
+  }
+
+  header {
+    grid-template-columns: 1fr;
+    row-gap: 40px;
+    text-align: center; /* Centers titles on narrow screens for cleaner balance */
+  }
+
+  h1 {
+    font-size: 36px; /* Dynamically scales down header scale for mobile view */
+  }
+
+  h2 {
+    font-size: 28px;
+    margin-bottom: 32px;
+  }
+
+  /* Corrects text balancing inside your dark green feature block */
+  .testimonial-box {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+}
